@@ -25,7 +25,7 @@ public class PostsService {
     @Transactional(readOnly=true)
     public List<Post> findAll(long userId) throws Exception{
 
-        List<Post> posts = postRepository.findByUserId(userId);
+        List<Post> posts = postRepository.findByIdUser(userId);
         if (posts == null) {
             throw new Exception(
                     String.format("No post exists with user id=%d", userId));

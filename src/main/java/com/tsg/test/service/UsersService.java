@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tsg.test.entity.User;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class UsersService {
     
@@ -15,9 +18,9 @@ public class UsersService {
     @Transactional
     public User save( final User user) throws Exception {
 
-        if (userRepository.existsById(user.getUserId())) {
+        if (userRepository.existsById(user.getId())) {
             throw new Exception (
-                    String.format("There already exists a user with id=%s", user.getUserId()));
+                    String.format("There already exists a user with id=%s", user.getId()));
         }
         return userRepository.save(user);
     }
@@ -25,7 +28,10 @@ public class UsersService {
     @Transactional(readOnly=true)
     public List<User> findOne(String username) throws Exception{
 
-        List<User> user = userRepository.findByUsername(username);
+        List<User> user = userRepository.findByUsername(username).map(Stream::of)
+                       .orElseGet(Stream::empty)
+                       .collect(Collectors.toList());;
+
         if (user == null) {
             throw new Exception(
                     String.format("No user exists with id=%d", username));
@@ -49,13 +55,12 @@ public class UsersService {
     @Transactional
     public User update( User user) throws Exception {
 
-        List<User> exist = userRepository.findById(user.getUserId());
+        List<User> exist = userRepository.findById(user.getId());
         if (exist == null) {
             throw new Exception (
-                    String.format("No user exists with id=%s", user.getUserId()));
+                    String.format("No user exists with id=%s", user.getId()));
         }
         return userRepository.save(user);
     }
-
 
 }

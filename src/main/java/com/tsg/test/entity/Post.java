@@ -3,8 +3,11 @@ package com.tsg.test.entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,25 +15,35 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 @Entity
+@Table(name="Posts")
 public class Post {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty("id")
     @Column(name="id")
     private Long id;
 
+    @JsonProperty("id_user")
     @ManyToOne
     @JoinColumn(name="id_user", nullable=false)
     private User user;
 
+    @JsonProperty("title")
     @Column(name="title")
     private String title;
 
+    @JsonProperty("description")
     @Column(name="description")
     private String description;
 
+    @JsonProperty("creation_time")
     @Column(name="creation_time")
     private LocalDate creation_time;
+
+    @JsonProperty("modification_time")
+    @Column(name="modification_time")
+    private LocalDate modification_time;
 
     public Post() { }
 
@@ -77,8 +90,16 @@ public class Post {
         return creation_time;
     }
     
-    public void setDescription(LocalDate _creation_time) {
+    public void setCreation_time(LocalDate _creation_time) {
         this.creation_time= _creation_time;
+    }
+
+    public LocalDate getModification_time() {
+        return modification_time;
+    }
+    
+    public void setModification_time(LocalDate _modification_time) {
+        this.modification_time= _modification_time;
     }
 
 }
