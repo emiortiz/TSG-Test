@@ -19,6 +19,10 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO database_test.users (`username`,`password`, `email`, `creation_time`) VALUES ('usuario_signin','{bcrypt}$2a$10$JMy53Oxm904ovD9xM5g7D.th2/QJZEkZV9AOyQyKM2XfcrSPOhwmK','mail@asd.com', '2019-12-25T10:10:30');
+INSERT INTO database_test.users (`username`,`password`, `email`, `creation_time`) VALUES ('usuario_update','{bcrypt}$2a$10$JMy53Oxm904ovD9xM5g7D.th2/QJZEkZV9AOyQyKM2XfcrSPOhwmK','mail@asd.com', '2019-12-25T10:10:30');
+INSERT INTO database_test.users (`username`,`password`, `email`, `creation_time`) VALUES ('usuario_delete','{bcrypt}$2a$10$JMy53Oxm904ovD9xM5g7D.th2/QJZEkZV9AOyQyKM2XfcrSPOhwmK','mail@asd.com', '2019-12-25T10:10:30');
+
 
 --
 -- Table structure for table `posts`
@@ -37,5 +41,11 @@ CREATE TABLE `posts` (
   FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (1,'post1_title','post_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (1,'post2_title','post_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (1,'post3_title','post_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (2,'post4_title','post_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (2,'post_udpate_title','post_update_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
+INSERT INTO database_test.posts (`id_user`, `title`, `description`, `creation_time`, `modification_time`) VALUES (1,'post_delete_title','post_delete_description','2019-12-25T10:10:30','2019-12-25T10:10:30');
 
   

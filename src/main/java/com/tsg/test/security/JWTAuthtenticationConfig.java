@@ -26,7 +26,7 @@ public class JWTAuthtenticationConfig {
 
         String token = Jwts
                 .builder()
-                .setId("espinozajgeJWT")
+                .setId("emiJWT")
                 .setSubject(username)
                 .claim("authorities",
                         grantedAuthorities.stream()

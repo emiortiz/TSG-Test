@@ -18,6 +18,9 @@ public class SignUpDataRequest {
     @JsonProperty("password")
     private String password;
 
+    @JsonProperty("email")
+    private String email;
+
     public String getUsername(){
         return username;
     }
@@ -32,5 +35,13 @@ public class SignUpDataRequest {
 
     public void setPassword(String _password){
         this.password = _password;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setEmail(String _email){
+        this.email = _email;
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.tsg.test.security.JWTAuthtenticationConfig;
 import com.tsg.test.security.services.UserDetailsImpl;
-import com.tsg.test.service.UsersRepository;
 import com.tsg.test.service.UsersService;
 import com.tsg.test.entity.User;
 import com.tsg.test.payloads.request.SignInDataRequest;
@@ -76,7 +74,7 @@ public class AuthController {
       return ResponseEntity.badRequest().body(new SignUpDataResponse("Error: Username is already taken"));
     }
 
-    User user = new User(data.getUsername(), passwordEncoder.encode(data.getPassword()), LocalDateTime.now(ZoneId.systemDefault()));
+    User user = new User(data.getUsername(),passwordEncoder.encode(data.getPassword()), data.getEmail(), LocalDateTime.now(ZoneId.systemDefault()));
 
     // Guardo el nuevo usuario en la DB
     usersService.save(user);
