@@ -3,10 +3,12 @@ package com.tsg.test.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tsg.test.entity.Post;
 
+@Service
 public class PostsService {
 
     @Autowired
@@ -15,10 +17,6 @@ public class PostsService {
     @Transactional
     public Post save( Post post) throws Exception {
 
-        if (postRepository.existsById(post.getId())) {
-            throw new Exception (
-                    String.format("There already exists a post with id=%s", post.getId()));
-        }
         return postRepository.save(post);
     }
 
@@ -29,6 +27,17 @@ public class PostsService {
         if (posts == null) {
             throw new Exception(
                     String.format("No post exists with user id=%d", userId));
+        }
+        return posts;
+    }
+
+    @Transactional(readOnly=true)
+    public List<Post> findOne(long postId) throws Exception{
+
+        List<Post> posts = postRepository.findByPostId(postId);
+        if (posts == null) {
+            throw new Exception(
+                    String.format("No post exists with user id=%d", postId));
         }
         return posts;
     }

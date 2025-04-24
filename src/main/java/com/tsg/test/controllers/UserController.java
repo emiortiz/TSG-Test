@@ -11,36 +11,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tsg.test.entity.Post;
 import com.tsg.test.entity.User;
-import com.tsg.test.service.PostsRepository;
-import com.tsg.test.service.UsersRepository;
+import com.tsg.test.service.UsersService;
 
 @RestController
-@RequestMapping("/users/me")
+@RequestMapping("/api/users")
 public class UserController {
-
-    @Autowired
-    private PostsRepository postsRepository;
     
     @Autowired
-    private UsersRepository usersRepository;
-    
+    private UsersService usersService;
 
-    @GetMapping("/posts/{userId}")
-    public List<Post> getPosts(@RequestParam long userId){
-        return postsRepository.findByIdUser(userId);
+    @GetMapping("/getOne")
+    public List<User> getOneUser(@RequestParam String username) throws Throwable {
+        return usersService.findOne(username);
     }
 
-    @PostMapping()
-    public User updateUser(@RequestBody User user){
-      return usersRepository.save(user);
+    @GetMapping("/getAll")
+    public List<User> getAllUser() throws Throwable {
+        return usersService.findAll();
+    }
+    
+    @PostMapping("/update")
+    public User updateUser(@RequestBody User user) throws Exception{
+        return usersService.save(user);
     }
   
-    @DeleteMapping()
-    public String deleteUser(@RequestBody User user){
-        //TODO: Tiene que devolver si lo pudo borrar o no aunquesea
-        usersRepository.delete(user);
-        return user.getId() + "was deleted successfully";
+    @DeleteMapping("/delete")
+    public String deleteUser(@RequestParam String username) throws Exception{
+        usersService.delete(username);
+        return username + "was deleted successfully";
     }
 }

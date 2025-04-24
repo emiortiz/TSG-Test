@@ -1,20 +1,16 @@
 package com.tsg.test.entity;
 
-import java.util.Collection;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +18,7 @@ import jakarta.persistence.Table;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty("id")
     @Column(name="id")
     private Long id;
@@ -35,14 +31,20 @@ public class User {
     @Column(name="password", nullable=false, length=255)
     private String password;
 
-    @JsonProperty("disable")
-    @Column(name="disable", nullable=false)
-    private int disable;
+    @JsonProperty("email")
+    @Column(name="email", nullable=false, length=255)
+    private String email;
 
-    public User(String _username, String _password){
+    @JsonProperty("creation_time")
+    @Column(name="creation_time")
+    private LocalDateTime  creation_time;
+
+    public User(){ }
+
+    public User(String _username, String _password, LocalDateTime _creation_time){
         this.username= _username;
         this.password= _password;
-        this.disable= 0;
+        this.creation_time = _creation_time;
     }
 
     public long getId(){
@@ -65,12 +67,20 @@ public class User {
         this.password = _password;
     }
 
-    public int getDisable(){
-        return disable;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String _email){
+        this.email = _email;
+    }
+
+    public LocalDateTime  getCreation_time() {
+        return creation_time;
     }
     
-    public void setDisable(int _disable){
-        this.disable = _disable;
+    public void setCreation_time(LocalDateTime  _creation_time) {
+        this.creation_time= _creation_time;
     }
     
 }

@@ -11,10 +11,11 @@ USE database_test;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL UNIQUE,
   `password` varchar(255) NOT NULL,
-  `disable` TINYINT(1) DEFAULT 0,
+  `email` varchar(255) NOT NULL,
+  `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -26,9 +27,9 @@ CREATE TABLE `users` (
 DROP TABLE IF EXISTS `posts`;
 
 CREATE TABLE `posts` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `id_user` int NOT NULL,
-  `title` varchar(255) NOT NULL UNIQUE,
+  `id` BIGINT  NOT NULL AUTO_INCREMENT,
+  `id_user` BIGINT  NOT NULL,
+  `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `creation_time` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `modification_time` DATETIME ON UPDATE CURRENT_TIMESTAMP,

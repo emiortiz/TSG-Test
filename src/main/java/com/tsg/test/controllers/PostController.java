@@ -1,5 +1,7 @@
 package com.tsg.test.controllers;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,40 +16,54 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tsg.test.entity.Post;
-import com.tsg.test.service.PostsRepository;
+import com.tsg.test.entity.User;
+import com.tsg.test.payloads.request.PostDataRequest;
+import com.tsg.test.service.PostsService;
+import com.tsg.test.service.UsersService;
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/api/posts")
 public class PostController {
 
     @Autowired
-    private PostsRepository postsRepository;
+    private PostsService postsService;
+
+    @Autowired
+    private UsersService usersService;
 
     @GetMapping("/getPosts")
-    public List<Post> getAllPost(@RequestParam long userId) {
-        return postsRepository.findByIdUser(userId);
+    public List<Post> getAllPost(@RequestParam long userId) throws Exception {
+        return postsService.findAll(userId);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Post createPost(@RequestBody Post post){
-      return postsRepository.save(post);
+    public Post createPost(@RequestBody PostDataRequest post) throws Exception{
+
+      User user = usersService.findOne(post.getUserId()).get(0);
+      Post newPost = new Post(user, post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));
+
+      return postsService.save(newPost);
     }
 
-    @GetMapping("/{id}")
-    public List<Post> getPost(@RequestParam long id){
-        return postsRepository.findByPostId(id);
+    @GetMapping("/getPost")
+    public List<Post> getPost(@RequestParam long postId) throws Exception{
+        return postsService.findOne(postId);
     }
 
     @PostMapping("/update")
-    public Post updatePost(@RequestBody Post post){
-      return postsRepository.save(post);
+    public Post updatePost(@RequestBody PostDataRequest post) throws Exception{
+
+      User user = usersService.findOne(post.getUserId()).get(0);
+      Post postToUpdate = new Post(user, post.getId() ,post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));
+
+      return postsService.save(postToUpdate);
     }
   
-    @DeleteMapping()
-    public String deletePost(@RequestBody Post post){
-        postsRepository.delete(post);
-        return post.getId() + "was deleted successfully";
+    @DeleteMapping("/delete")
+    public String deletePost(@RequestParam long postId) throws Exception{
+        postsService.delete(postId);
+        return postId + " was deleted successfully";
     }
 
 }

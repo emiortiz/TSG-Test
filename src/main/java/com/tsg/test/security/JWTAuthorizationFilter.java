@@ -14,14 +14,11 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import com.tsg.test.security.Constans;
-import com.tsg.test.security.SecurityUtils;
 
 /*
  * Clase encargada de autorizar cada token en cada Request
@@ -31,9 +28,7 @@ import com.tsg.test.security.SecurityUtils;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
     private Claims setSigningKey(HttpServletRequest request) {
-        
-        System.out.println("setSigningKey");
-
+         
         String jwtToken = request.
             getHeader(Constans.HEADER_AUTHORIZACION_KEY).
             replace(Constans.TOKEN_BEARER_PREFIX, "");
@@ -47,7 +42,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
    
    private void setAuthentication(Claims claims) {
 
-        System.out.println("setAuthentication");
         List<String> authorities = (List<String>) claims.get("authorities");
 
         UsernamePasswordAuthenticationToken auth = 
@@ -59,11 +53,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
    }
 
    private boolean isJWTValid(HttpServletRequest request, HttpServletResponse res) {
-        System.out.println("isJWTValid");
-        System.out.println(request.toString());
-        System.out.println(res.toString());
 
-        String authenticationHeader = request.getHeader(Constans.HEADER_AUTHORIZACION_KEY);
+      String authenticationHeader = request.getHeader(Constans.HEADER_AUTHORIZACION_KEY);
         if (authenticationHeader == null || !authenticationHeader.startsWith(Constans.TOKEN_BEARER_PREFIX))
             return false;
         return true;
@@ -71,7 +62,6 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
    @Override
    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, java.io.IOException {
-        System.out.println("doFilterInternal");
 
         try {
          if (isJWTValid(request, response)) {
@@ -86,8 +76,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
          }
          filterChain.doFilter(request, response);
       } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
-        
-        System.out.println("doFilterInternal_catch");
+
          response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
          response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
          return;

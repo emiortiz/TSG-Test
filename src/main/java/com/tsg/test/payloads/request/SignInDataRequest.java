@@ -1,4 +1,4 @@
-package com.tsg.test.payloads;
+package com.tsg.test.payloads.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,20 +10,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  */
 
-public class SignInData {
+public class SignInDataRequest {
     
-    @JsonProperty("user")
-    private String user;
+    @JsonProperty("username")
+    private String username;
 
     @JsonProperty("password")
     private String password;
 
-    public String getUser(){
-        return user;
+    public String getUsername(){
+        return username;
     }
 
-    public void setUser(String _user){
-        this.user = _user;
+    public void setUsername(String _username){
+        this.username = _username;
     }
 
     public String getPassword(){
