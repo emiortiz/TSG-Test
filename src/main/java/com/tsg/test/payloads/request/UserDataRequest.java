@@ -1,29 +1,29 @@
 package com.tsg.test.payloads.request;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern.Flag;
 import jakarta.validation.constraints.Size;
 
-/*
- * Clase encargada de mapear los datos provenientes del cliente 
- * al momento del sign up
- * 
- * Es igual a la clase signIn porque seria una mala practica acoplarlas. 
- * 
- */
+public class UserDataRequest {
 
-public class SignUpDataRequest {
+    @NotNull(message = "id es requerido.")
+    @JsonProperty("id")
+    private Long id;
 
     @NotEmpty(message = "username es requerido.")
     @Size(min = 2, max = 255, message = "El largo del username debe ser entre 2 y 255 caracteres")
     @JsonProperty("username")
     private String username;
 
-    @NotEmpty(message = "La contrasenia es requerida")
-    @Size(min = 2, max = 255, message = "El largo del password debe ser entre 2 y 255 caracteres")
+    @NotEmpty(message = "password es requerido.")
+    @Size(min = 2, max = 255, message = "El largo del username debe ser entre 2 y 255 caracteres")
     @JsonProperty("password")
     private String password;
 
@@ -31,6 +31,15 @@ public class SignUpDataRequest {
     @Email(message = "The email address is invalid.", flags = { Flag.CASE_INSENSITIVE })
     @JsonProperty("email")
     private String email;
+
+    @NotNull(message = "The creation time is required.")
+    @JsonProperty("creation_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime  creation_time;
+
+    public long getId(){
+        return id;
+    }
 
     public String getUsername(){
         return username;
@@ -40,7 +49,7 @@ public class SignUpDataRequest {
         this.username = _username;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
@@ -48,11 +57,20 @@ public class SignUpDataRequest {
         this.password = _password;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
     public void setEmail(String _email){
         this.email = _email;
     }
+
+    public LocalDateTime  getCreation_time() {
+        return creation_time;
+    }
+    
+    public void setCreation_time(LocalDateTime  _creation_time) {
+        this.creation_time= _creation_time;
+    }
+    
 }

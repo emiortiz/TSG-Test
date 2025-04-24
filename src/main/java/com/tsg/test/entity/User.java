@@ -2,8 +2,6 @@ package com.tsg.test.entity;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,29 +15,32 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
     @Column(name="id")
     private Long id;
 
-    @JsonProperty("username")
     @Column(name="username", nullable=false, length=255)
     private String username;
 
-    @JsonProperty("password")
     @Column(name="password", nullable=false, length=255)
     private String password;
 
-    @JsonProperty("email")
     @Column(name="email", nullable=false, length=255)
     private String email;
 
-    @JsonProperty("creation_time")
     @Column(name="creation_time")
     private LocalDateTime  creation_time;
 
     public User(){ }
 
     public User(String _username, String _password, String _email ,LocalDateTime _creation_time){
+        this.username= _username;
+        this.password= _password;
+        this.creation_time= _creation_time;
+        this.email= _email;
+    }
+
+    public User(long _id, String _username, String _password, String _email ,LocalDateTime _creation_time){
+        this.id= _id;
         this.username= _username;
         this.password= _password;
         this.creation_time= _creation_time;

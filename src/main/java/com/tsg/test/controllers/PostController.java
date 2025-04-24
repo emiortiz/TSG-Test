@@ -21,6 +21,8 @@ import com.tsg.test.payloads.request.PostDataRequest;
 import com.tsg.test.service.PostsService;
 import com.tsg.test.service.UsersService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -38,7 +40,7 @@ public class PostController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Post createPost(@RequestBody PostDataRequest post) throws Exception{
+    public Post createPost(@Valid @RequestBody PostDataRequest post) throws Exception{
 
       User user = usersService.findOne(post.getUserId()).get(0);
       Post newPost = new Post(user, post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));
@@ -52,7 +54,7 @@ public class PostController {
     }
 
     @PostMapping("/update")
-    public Post updatePost(@RequestBody PostDataRequest post) throws Exception{
+    public Post updatePost(@Valid @RequestBody PostDataRequest post) throws Exception{
 
       User user = usersService.findOne(post.getUserId()).get(0);
       Post postToUpdate = new Post(user, post.getId() ,post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));

@@ -25,7 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         try {
             user = usersService.findOne(username).get(0);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

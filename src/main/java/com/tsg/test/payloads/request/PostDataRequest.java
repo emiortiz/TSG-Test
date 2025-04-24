@@ -5,12 +5,17 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 
 public class PostDataRequest {
 
+    @NotNull(message = "id es requerido.")
     @JsonProperty("id")
     private Long id;
 
+    @NotNull(message = "id_user es requerido.")
     @JsonProperty("id_user")
     private long id_user;
 
@@ -20,6 +25,7 @@ public class PostDataRequest {
     @JsonProperty("description")
     private String description;
 
+    @NotNull(message = "The creation time is required.")
     @JsonProperty("creation_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime  creation_time;

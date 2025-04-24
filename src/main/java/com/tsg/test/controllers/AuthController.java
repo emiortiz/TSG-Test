@@ -22,13 +22,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.tsg.test.security.JWTAuthtenticationConfig;
 import com.tsg.test.security.services.UserDetailsImpl;
 import com.tsg.test.service.UsersService;
+
+import jakarta.validation.Valid;
+
 import com.tsg.test.entity.User;
 import com.tsg.test.payloads.request.SignInDataRequest;
 import com.tsg.test.payloads.request.SignUpDataRequest;
 import com.tsg.test.payloads.response.SignInDataResponse;
 import com.tsg.test.payloads.response.SignUpDataResponse;
-
-
 
 @RestController
 @RequestMapping("/auth")
@@ -47,7 +48,7 @@ public class AuthController {
   private PasswordEncoder passwordEncoder;
 
   @PostMapping("/signin")
-  public ResponseEntity<SignInDataResponse> signIn(@RequestBody SignInDataRequest data){
+  public ResponseEntity<SignInDataResponse> signIn(@Valid @RequestBody SignInDataRequest data){
 
     // Creamos un AutehnticationManager para validar las credenciales del usuario. 
     Authentication authentication = authenticationManager
@@ -67,7 +68,7 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  public ResponseEntity<SignUpDataResponse> signUp(@RequestBody SignUpDataRequest data) throws Exception{
+  public ResponseEntity<SignUpDataResponse> signUp(@Valid @RequestBody SignUpDataRequest data) throws Exception{
     
     // valido si el username ya esta en uso
     if (!usersService.findOne(data.getUsername()).isEmpty()) {

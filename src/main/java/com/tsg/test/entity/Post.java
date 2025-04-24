@@ -7,9 +7,7 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDateTime;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,29 +20,23 @@ public class Post {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
     @Column(name="id")
     private Long id;
 
-    @JsonProperty("id_user")
     @ManyToOne
     @JoinColumn(name="id_user")
     private User user;
 
-    @JsonProperty("title")
     @Column(name="title")
     private String title;
 
-    @JsonProperty("description")
     @Column(name="description")
     private String description;
 
-    @JsonProperty("creation_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name="creation_time")
     private LocalDateTime  creation_time;
 
-    @JsonProperty("modification_time")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name="modification_time")
     private LocalDateTime  modification_time;
