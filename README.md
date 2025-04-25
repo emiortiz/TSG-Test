@@ -20,16 +20,23 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     cd TSG-Test
     ```
 2. **Cambiar las credenciales de la BD en el proyecto:**
-   Ir a application.properties en \src\main\resources\application.properties y cambiar usuario y contraseña de la base de datos. 
+   Ir a application.properties en \src\main\resources\application.properties y cambiar usuario y contraseña de la base de datos.
 
-3.  **Construir el proyecto con Maven (si aplica):**
+   ```application.properties
+    spring.datasource.url=jdbc:mysql://localhost:3306/database_test
+    spring.datasource.username= #Remplazar 
+    spring.datasource.password= #Remplazar
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    ```
+
+4.  **Construir el proyecto con Maven (si aplica):**
     Ejecuta el siguiente comando:
     ```bash
     mvnd clean install
     ```
     Este comando descargará las dependencias, compilará el código fuente y generará el archivo JAR ejecutable.
 
-4.  **Crea la BD y los schemas necesarios:**
+5.  **Crea la BD y los schemas necesarios:**
     Ejecuta el siguiente comando
     ```bash
     db_script.sh [UsuarioDB] [PasswordDB]
@@ -44,7 +51,9 @@ Antes de comenzar, asegúrate de tener instalado lo siguiente en tu sistema:
     ```bash
     java -jar test-0.0.1-SNAPSHOT.jar
     ```
-3. Listo ya puede probar la rest API siguiendo la documentacion que esta en este [enlace](https://emio-7045179.postman.co/workspace/My-Workspace~d631068d-c662-4814-87f3-0b376ef0ebda/collection/44400106-fe40b2ee-c69a-48ed-a782-c38e950ebdfd?action=share&creator=44400106) 
+    Esto pondra en ejecucion la app y ocupara el puerto 8080 de su localhost
+     
+4. Listo ya puede probar la rest API siguiendo la documentacion que esta en este [enlace](https://emio-7045179.postman.co/workspace/My-Workspace~d631068d-c662-4814-87f3-0b376ef0ebda/collection/44400106-fe40b2ee-c69a-48ed-a782-c38e950ebdfd?action=share&creator=44400106) 
 
 
 ## Notas Adicionales
