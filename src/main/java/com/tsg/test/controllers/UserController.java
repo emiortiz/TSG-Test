@@ -46,6 +46,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public String deleteUser(@RequestParam String username) throws Exception{
         usersService.delete(username);
+
         return username + "was deleted successfully";
     }
 }

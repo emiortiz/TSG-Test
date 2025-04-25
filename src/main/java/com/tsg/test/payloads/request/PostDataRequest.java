@@ -5,13 +5,11 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 
 public class PostDataRequest {
-
-    @NotNull(message = "id es requerido.")
+    
     @JsonProperty("id")
     private Long id;
 

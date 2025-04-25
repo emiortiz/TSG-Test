@@ -41,7 +41,6 @@ public class PostController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Post createPost(@Valid @RequestBody PostDataRequest post) throws Exception{
-
       User user = usersService.findOne(post.getUserId()).get(0);
       Post newPost = new Post(user, post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));
 
@@ -55,7 +54,6 @@ public class PostController {
 
     @PostMapping("/update")
     public Post updatePost(@Valid @RequestBody PostDataRequest post) throws Exception{
-
       User user = usersService.findOne(post.getUserId()).get(0);
       Post postToUpdate = new Post(user, post.getId() ,post.getTitle(), post.getDescription(), post.getCreation_time(), LocalDateTime.now(ZoneId.systemDefault()));
 
@@ -65,6 +63,7 @@ public class PostController {
     @DeleteMapping("/delete")
     public String deletePost(@RequestParam long postId) throws Exception{
         postsService.delete(postId);
+
         return postId + " was deleted successfully";
     }
 

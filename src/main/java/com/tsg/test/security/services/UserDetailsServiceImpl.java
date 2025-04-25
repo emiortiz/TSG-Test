@@ -22,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = null;
+        
         try {
             user = usersService.findOne(username).get(0);
         } catch (Exception e) {
